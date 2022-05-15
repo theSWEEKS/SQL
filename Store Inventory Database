@@ -1,0 +1,34 @@
+--Creates table named "inventory" to list Primary Key, product name, quantity held, price, cost, location, and popularity of each item
+
+CREATE TABLE inventory (id INTEGER PRIMARY KEY, product TEXT, quantity INTEGER, price INTEGER, cost INTEGER, aisle INTEGER, popularity INTEGER);
+
+--Inserts 15 different items into the database
+INSERT into inventory VALUES 
+(1,"Pants",10,5,2,7,2),
+(2,"Bike",5,20,15,5,4),
+(3,"Computer",1,100,75,5,5),
+(4,"Plate",12,3,1,3,1),
+(5,"Bowl",9,2,1,3,1),
+(6,"Utensil",2,1,1,1,1),
+(7,"Napkin",100,.1,.01,1,4),
+(8,"Cup",25,.5,.25,1,3),
+(9,"Shirt",15,12,8,7,4),
+(10,"Bread",50,3,1,2,3),
+(11,"Butter",10,3,1,2,3),
+(12,"Applesauce",25,1,.5,2,2),
+(13,"Gum",18,1,.25,2,2),
+(14,"Peanuts",7,2,1,2,1),
+(15,"Chips",13,4,3,2,5);
+
+--dispalys all inventory ordered by sales price
+SELECT * FROM inventory ORDER BY price DESC;
+
+--sums quantity of all inventory on aisle 3
+SELECT SUM(quantity) FROM inventory WHERE aisle = 3;
+
+--average cost of items on aisle 5
+SELECT AVG(cost) "avg cost aisle 5"
+FROM inventory WHERE aisle=5;
+
+--3 most popular items
+SELECT product, price, popularity FROM inventory ORDER BY popularity DESC LIMIT 3;
