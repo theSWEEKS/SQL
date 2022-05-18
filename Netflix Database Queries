@@ -1,0 +1,28 @@
+SELECT titles.title, people.director
+    FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+    JOIN "CharlotteChaze/BreakIntoTech"."netflix_people" people
+    ON titles.show_id = people.show_id LIMIT 5;
+
+--Select most recent date of added movies
+SELECT max(date(date_added)) FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info";
+
+--Sort all titles by date added with grouped count of # added per date
+SELECT date_added, count(date(date_added))
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" WHERE NOT date_added=''
+GROUP BY date_added ORDER BY date(date_added) DESC;
+
+--Order all titles alphabetically
+SELECT title from "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+ORDER BY title;
+
+--Display DIRECTOR name for specific movie.
+select people.director 
+    FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+    JOIN "CharlotteChaze/BreakIntoTech"."netflix_people" people
+    ON titles.show_id = people.show_id
+    WHERE title='Bright Star';
+
+--List oldest movie/show title added with release year
+SELECT date_added, title, release_year 
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" WHERE NOT date_added=''
+ORDER BY date(date_added) ASC LIMIT 1;
