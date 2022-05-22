@@ -34,3 +34,39 @@ SELECT COUNT(customers.acctnum) AS "Order Qty > 2",ROUND(AVG(quantity),2)*price 
     LEFT JOIN customers
     ON FebSales.orderid = customers.order_id
     WHERE FebSales.Quantity>2;
+
+--Select Products and Quantity sold in Los Angeles in February
+SELECT Product, sum(Quantity) from FebSales
+WHERE location like '%los Angeles%'
+GROUP BY Product
+
+--Locations in NY with 3 orders or more
+SELECT location, count(orderid) AS '# Orders'
+FROM JanSales
+WHERE location LIKE '%New York%'
+GROUP BY location
+HAVING count(orderID)>2
+ORDER BY location;
+
+--Select quantity of different headphones sold in February
+SELECT Product, sum(Quantity) from FebSales
+WHERE product like '%headphone%'
+GROUP BY Product;
+
+--Average revenue per order in February
+SELECT sum(quantity*price)/COUNT(customers.acctnum)
+    FROM FebSales
+    JOIN customers
+    ON FebSales.orderID = customers.order_id
+    
+--Average quantity of products purchased per account in February
+SELECT SUM(quantity)/count(customers.acctnum)
+FROM FebSales
+JOIN customers
+ON FebSales.orderID = customers.order_id;
+
+---Select product and revenue with most revenue in Jan
+SELECT Product, sum(quantity*price) AS Rev
+FROM JanSales
+GROUP BY product
+ORDER BY Rev DESC LIMIT 1
