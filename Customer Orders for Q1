@@ -1,0 +1,36 @@
+--select first 20 customers from customers table
+SELECT * FROM BIT_DB.customers LIMIT 20;
+
+--select first 20 orders from January sales table
+SELECT * FROM BIT_DB.JanSales LIMIT 20;
+
+--count number of sales placed in January. Result = 9723
+SELECT count(*) FROM BIT_DB.JanSales;
+
+--count number of sales for iPhones placed in January. Result = 379
+SELECT count(*) FROM BIT_DB.JanSales WHERE product="iPhone";
+
+--Joins customers table & FebSales table to select customer account numbers (acctnum) where for orders placed in February. Result = 1000
+SELECT customers.acctnum 
+    FROM customers
+    JOIN FebSales
+    ON customers.order_id = FebSales.orderID;
+
+--Price of Cheapest product sold in January. Result = AAA Batteries (4-pack) for $2.99
+SELECT Product, min(price) FROM JanSales;
+
+--Total revenue for each product sold in January
+SELECT Product, sum(quantity)*price FROM JanSales GROUP BY Product;
+
+--Products sold to customer at 548 Lincoln St, Seattle, WA 98101 with quantity and total revenue. Result 2x AA Batteries (4-pack) for total revenue of $7.68
+SELECT Product,sum(quantity) AS quantity ,sum(quantity)*price AS revenue
+    FROM FebSales
+    WHERE location='548 Lincoln St, Seattle, WA 98101'
+    GROUP BY Product;
+
+--Number of orders with than 2 products & average amount spent on those orders. Result = 890 customers ordered more than 2 items for an average price of $3.84
+SELECT COUNT(customers.acctnum) AS "Order Qty > 2",ROUND(AVG(quantity),2)*price AS "Average Revenue"
+    FROM FebSales
+    LEFT JOIN customers
+    ON FebSales.orderid = customers.order_id
+    WHERE FebSales.Quantity>2;
